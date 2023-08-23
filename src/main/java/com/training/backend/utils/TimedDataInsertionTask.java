@@ -91,9 +91,20 @@ public class TimedDataInsertionTask {
                 else {
                     BigDecimal oldPrice = realTimeStockMapper.selectRealTimeStockByStockId(stockId).getCurrentPrice();
 
-                    while (currentPrice.subtract(oldPrice).abs().divide(oldPrice,24,RoundingMode.HALF_UP).compareTo(BigDecimal.valueOf(0.30)) > 0){
-                        currentPrice = BigDecimal.valueOf(Math.random()*100);
+                    if (currentPrice.compareTo(BigDecimal.valueOf(30))>0) {
+                        while (currentPrice.subtract(oldPrice).abs().divide(oldPrice, 24, RoundingMode.HALF_UP).compareTo(BigDecimal.valueOf(0.30)) > 0) {
+                            currentPrice = BigDecimal.valueOf(Math.random() * 100);
+                        }
+                    } else if (currentPrice.compareTo(BigDecimal.valueOf(30)) <= 0 && currentPrice.compareTo(BigDecimal.valueOf(10))>0) {
+                        while (currentPrice.subtract(oldPrice).abs().divide(oldPrice, 24, RoundingMode.HALF_UP).compareTo(BigDecimal.valueOf(0.40)) > 0) {
+                            currentPrice = BigDecimal.valueOf(Math.random() * 100);
+                        }
+                    } else {
+                        while (currentPrice.compareTo(oldPrice) < 0 || currentPrice.subtract(oldPrice).abs().divide(oldPrice, 24, RoundingMode.HALF_UP).compareTo(BigDecimal.valueOf(0.60)) > 0 ) {
+                            currentPrice = BigDecimal.valueOf(Math.random() * 100);
+                        }
                     }
+
                     if(currentPrice.compareTo(BigDecimal.valueOf(1))<0){
                         currentPrice = BigDecimal.valueOf(1);
                     }

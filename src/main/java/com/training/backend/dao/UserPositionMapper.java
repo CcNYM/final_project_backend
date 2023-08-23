@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface UserPositionMapper {
+
     public int updateUserPositionByUserPosition(UserPosition userPosition);
 
     public UserPosition selectUserPositionByUserIdAndStockId(@Param("userId")int userId, @Param("stockId")int stockId);
